@@ -1,6 +1,6 @@
 Package: zdeskR
 Title: Connect to Your 'Zendesk' Data
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: 
     c(person(given = "Chris",
            family = "Umphlett",
@@ -13,8 +13,8 @@ Authors@R:
 Description: Facilitates making a connection to the 
   'Zendesk' API and executing various queries. You can use it to
   get ticket data and ticket metrics. The 'Zendesk' documentation is 
-  available at <https://developer.zendesk.com/rest_api/docs/support/introduction>. 
-  This package is not supported by 
+  available at <https://developer.zendesk.com/rest_api
+  /docs/support/introduction>. This package is not supported by 
   'Zendesk' (owner of the software).
 URL: https://github.com/chrisumphlett/zdeskR
 BugReports: https://github.com/chrisumphlett/zdeskR/issues
@@ -26,9 +26,9 @@ Imports: dplyr (>= 1.0.0), magrittr (>= 1.5), jsonlite (>= 1.6.1),
         (>= 1.0.0), tibble (>= 1.0.3), plyr (>= 1.8.6)
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2020-08-24 12:05:09 UTC; c.umphlett
+Packaged: 2020-11-16 19:08:41 UTC; c.umphlett
 Author: Chris Umphlett [aut, cre],
   Avinash Panigrahi [aut]
 Maintainer: Chris Umphlett <christopher.umphlett@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-08-24 16:20:03 UTC
+Date/Publication: 2020-11-17 05:30:03 UTC
