@@ -2,9 +2,9 @@
 % Please edit documentation in R/get_users.R
 \name{get_users}
 \alias{get_users}
-\title{Returns all available zendesk users.}
+\title{Returns All Available Zendesk Users.}
 \usage{
-get_users(email_id, token, subdomain)
+get_users(email_id, token, subdomain, start_page = 1)
 }
 \arguments{
 \item{email_id}{Zendesk Email Id (username).}
@@ -12,6 +12,8 @@ get_users(email_id, token, subdomain)
 \item{token}{Zendesk API token.}
 
 \item{subdomain}{Your organization's Zendesk sub-domain.}
+
+\item{start_page}{First page of results to return, default is 1.}
 }
 \value{
 Data Frame with user details
@@ -28,6 +30,18 @@ It's not a good practice to write down these authentication
 parameters in your code. There are various methods and
 packages available that are more secure; this package
 doesn't require you to use any one in particular.
+
+The start_page parameter is useful if you have many users. Each
+page contains 100 users. Zendesk does not have an incremental
+method for pulling users by date but after you retrieve all of
+your users once, you can then increment your start page to
+something that will limit the number of users you are
+re-pulling each time.
+
+If you are pulling partial lists of users be aware that you
+will not get updates on older users. You will only get recently
+created users, not modified/deleted users and their modified
+data nor updated last login dates.
 }
 \examples{
 \dontrun{

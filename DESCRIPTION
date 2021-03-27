@@ -1,6 +1,6 @@
 Package: zdeskR
 Title: Connect to Your 'Zendesk' Data
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     c(person(given = "Chris",
            family = "Umphlett",
@@ -20,15 +20,14 @@ URL: https://github.com/chrisumphlett/zdeskR
 BugReports: https://github.com/chrisumphlett/zdeskR/issues
 License: CC0
 Encoding: UTF-8
-LazyData: true
 Imports: dplyr (>= 1.0.0), magrittr (>= 1.5), jsonlite (>= 1.6.1),
-        purrr (>= 0.3.3), httr (>= 1.4.1), tidyselect (>= 1.0.0), tidyr
-        (>= 1.0.0), tibble (>= 1.0.3), plyr (>= 1.8.6)
+        purrr (>= 0.3.3), httr (>= 1.4.1), tidyr (>= 1.0.0), plyr (>=
+        1.8.6)
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2020-11-16 19:08:41 UTC; c.umphlett
+Packaged: 2021-03-27 14:20:50 UTC; c.umphlett
 Author: Chris Umphlett [aut, cre],
   Avinash Panigrahi [aut]
 Maintainer: Chris Umphlett <christopher.umphlett@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-11-17 05:30:03 UTC
+Date/Publication: 2021-03-27 14:40:02 UTC

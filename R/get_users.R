@@ -1,4 +1,4 @@
-#' Returns all available zendesk users.
+#' Returns All Available Zendesk Users.
 #'
 #' It takes your Email Id, authentication token,
 #' sub-domain and parse all the users in a list.
@@ -11,6 +11,18 @@
 #' packages available that are more secure; this package
 #' doesn't require you to use any one in particular.
 #'
+#' The start_page parameter is useful if you have many users. Each
+#' page contains 100 users. Zendesk does not have an incremental
+#' method for pulling users by date but after you retrieve all of
+#' your users once, you can then increment your start page to
+#' something that will limit the number of users you are
+#' re-pulling each time.
+#'
+#' If you are pulling partial lists of users be aware that you
+#' will not get updates on older users. You will only get recently
+#' created users, not modified/deleted users and their modified
+#' data nor updated last login dates.
+#'
 #'
 #' @references \url{https://developer.zendesk.com/rest_api
 #' /docs/support/users}
@@ -18,6 +30,7 @@
 #' @param email_id Zendesk Email Id (username).
 #' @param token Zendesk API token.
 #' @param subdomain Your organization's Zendesk sub-domain.
+#' @param start_page First page of results to return, default is 1.
 #'
 #' @return Data Frame with user details
 #'
@@ -33,7 +46,7 @@
 #' users <- get_users(email_id, token, subdomain)
 #' }
 
-get_users <- function(email_id, token, subdomain) {
+get_users <- function(email_id, token, subdomain, start_page = 1) {
 
   user <- paste0(email_id, "/token")
   pwd <- token
@@ -44,9 +57,10 @@ get_users <- function(email_id, token, subdomain) {
   req_users <- list()
   stop_paging <- FALSE
   i <- 1
+  page <- start_page
   while(stop_paging == FALSE){
     req_users[[i]] <-  httr::RETRY("GET",
-                                     url = paste0(url_users, i),
+                                     url = paste0(url_users, page),
                                      httr::authenticate(user, pwd),
                                      times = 4,
                                      pause_min = 10,
@@ -57,6 +71,7 @@ get_users <- function(email_id, token, subdomain) {
       stop_paging <- TRUE
     }
     i <- i + 1
+    page <- page + 1
   }
 
   build_data_frame <- function(c){
