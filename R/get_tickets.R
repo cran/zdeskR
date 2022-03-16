@@ -27,6 +27,11 @@
 #' packages available that are more secure; this package
 #' doesn't require you to use any one in particular.
 #'
+#' The remove_cols parameter allows the removal of custom fields causing errors.
+#' Errors occurred when a field was sometimes blank and assigned a logical type
+#' and then appended to non-blank, non-logical inside of purrr::map_dfr.
+#' See issue #1 on GH.
+#'
 #' @references \url{https://developer.zendesk.com/rest_api
 #' /docs/support/incremental_export#start_time}
 #'
@@ -37,6 +42,7 @@
 #' tickets modified after that date.
 #' @param end_time String with a date or datetime to get all
 #' tickets modified before that date.
+#' @param remove_cols Vector of column names to remove from the results.
 #'
 #' @return a Data Frame containing all tickets after the
 #' start time.
@@ -53,57 +59,65 @@
 #'
 #' @examples \dontrun{
 #' all_tickets <- get_tickets(email_id, token, subdomain,
-#' start_time = "2021-01-31 00:00:00", end_time = "2021-01-31 23:59:59")
+#'   start_time = "2021-01-31 00:00:00", end_time = "2021-01-31 23:59:59"
+#' )
 #' }
-
-
-get_tickets <- function(email_id, token, subdomain, start_time, end_time){
-
+get_tickets <- function(email_id, token, subdomain, start_time, end_time,
+                        remove_cols = NULL) {
   user <- paste0(email_id, "/token")
   pwd <- token
   unix_start <- to_unixtime(as.POSIXct(start_time))
   unix_end <- to_unixtime(as.POSIXct(end_time))
 
-
   request_ticket <- list()
   stop_paging <- FALSE
-  i <-1
+  i <- 1
 
-  while(stop_paging == FALSE){
-    url <- paste0("https://", subdomain,
-                  ".zendesk.com/api/v2/incremental/tickets.json?start_time=",
-                  unix_start)
+  while (stop_paging == FALSE) {
+    url <- paste0(
+      "https://", subdomain,
+      ".zendesk.com/api/v2/incremental/tickets.json?start_time=",
+      unix_start
+    )
 
-    request_ticket[[i]] <- httr::RETRY('GET',
-                                       url = url,
-                                       httr::authenticate(user, pwd),
-                                       times = 4,
-                                       pause_min = 10,
-                                       terminate_on = NULL,
-                                       terminate_on_success = TRUE,
-                                       pause_cap = 5)
-    unix_start <- (jsonlite::fromJSON(httr::content(request_ticket[[i]], 'text'),flatten = TRUE))$end_time
-    if((jsonlite::fromJSON(httr::content(request_ticket[[i]], 'text'),flatten = TRUE))$end_time >= unix_end){
+    request_ticket[[i]] <- httr::RETRY("GET",
+      url = url,
+      httr::authenticate(user, pwd),
+      times = 4,
+      pause_min = 10,
+      terminate_on = NULL,
+      terminate_on_success = TRUE,
+      pause_cap = 5
+    )
+    message(paste0(i, " - a"))
+    unix_start <- (jsonlite::fromJSON(httr::content(
+      request_ticket[[i]],
+      "text"
+    ), flatten = TRUE))$end_time
+    if ((jsonlite::fromJSON(httr::content(request_ticket[[i]], "text"),
+      flatten = TRUE
+    ))$end_time >= unix_end) {
       stop_paging <- TRUE
     }
+    message(paste0(i, " - b"))
     i <- i + 1
   }
 
-
-  build_data_frame <- function(c){
-    tickets <- as.data.frame((jsonlite::fromJSON(httr::content(request_ticket[[c]], 'text'), flatten = TRUE))$tickets)
+  build_data_frame <- function(c) {
+    tickets <- as.data.frame((jsonlite::fromJSON(httr::content(
+      request_ticket[[c]], "text"
+    ), flatten = TRUE))$tickets)
   }
-  tickets <- purrr::map_dfr(1:length(request_ticket), build_data_frame)
+  tickets <- purrr::map_dfr(seq_len(length(request_ticket)), build_data_frame)
 
-  pivot_data_frame <- function(c){
-    pivot_df <- as.data.frame(tickets$custom_fields[c])%>%
-      tidyr::pivot_wider(names_from= .data$id, values_from= .data$value)
+  pivot_data_frame <- function(c) {
+    pivot_df <- as.data.frame(tickets$custom_fields[c]) %>%
+      tidyr::pivot_wider(names_from = .data$id, values_from = .data$value) %>%
+      select(-remove_cols)
   }
 
-
-  ticket_final <- purrr::map_dfr(1:nrow(tickets), pivot_data_frame)
+  ticket_final <- purrr::map_dfr(seq_len(nrow(tickets)), pivot_data_frame)
   ticket_final2 <- bind_cols(tickets, ticket_final)
 
   return(ticket_final2)
-
 }

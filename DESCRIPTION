@@ -1,6 +1,6 @@
 Package: zdeskR
 Title: Connect to Your 'Zendesk' Data
-Version: 0.1.1
+Version: 0.2.0
 Authors@R: 
     c(person(given = "Chris",
            family = "Umphlett",
@@ -23,11 +23,11 @@ Encoding: UTF-8
 Imports: dplyr (>= 1.0.0), magrittr (>= 1.5), jsonlite (>= 1.6.1),
         purrr (>= 0.3.3), httr (>= 1.4.1), tidyr (>= 1.0.0), plyr (>=
         1.8.6)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 NeedsCompilation: no
-Packaged: 2021-03-27 14:20:50 UTC; c.umphlett
+Packaged: 2022-03-16 22:07:36 UTC; c.umphlett
 Author: Chris Umphlett [aut, cre],
   Avinash Panigrahi [aut]
 Maintainer: Chris Umphlett <christopher.umphlett@gmail.com>
 Repository: CRAN
-Date/Publication: 2021-03-27 14:40:02 UTC
+Date/Publication: 2022-03-16 22:20:02 UTC
