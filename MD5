@@ -1,13 +1,15 @@
-d3db07e58ef11797188d75486eaeae89 *DESCRIPTION
-f6ed4556db86262c87237d00df44719f *NAMESPACE
+7998f55f5c94dda7029e8f150b742a27 *DESCRIPTION
+2d70ac98886e037adf6c8af8c455c9f5 *NAMESPACE
 0c56de487b24d67cceb6d3f8c9c1520d *R/get_all_ticket_metrics.R
 59f3ebaf60edcb6bec030929f89147c8 *R/get_custom_fields.R
 0d8e5db95e8ce76ca0d32abc2c2f51f1 *R/get_tickets.R
+ae5295e6eb28b9997a0b5396ebfff744 *R/get_tickets_comments.R
 29114e2be0f359aacb54c9d1793259fe *R/get_users.R
 6d096fbab0d3b163d58773e600c76243 *R/utils.R
 8c51999441ee9fbff5474873d7e69ecb *man/from_8601.Rd
 92760f5d212286ac502c89d8091ccbe3 *man/get_all_ticket_metrics.Rd
 fd6608bf29f330a8a4585041f0e23d50 *man/get_custom_fields.Rd
 6ec999a1344b69990b033273b8089fca *man/get_tickets.Rd
+729282628d126bbe93eab5892f32a901 *man/get_tickets_comments.Rd
 1301c5794f924e6510156c09ed742da3 *man/get_users.Rd
 edb7f42cff1e0a0a669d7f43eb920c96 *man/to_unixtime.Rd
